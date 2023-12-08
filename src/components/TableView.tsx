@@ -13,7 +13,7 @@ import Image from "next/image"
 import { Book } from "src/generated"
 
 type TableViewProps = {
-  onEdit: () => void
+  onEdit: (book: Book) => void
   data: Book[] | []
 }
 
@@ -52,9 +52,14 @@ export default function TableView({ data, onEdit }: TableViewProps) {
     {
       title: "Action",
       key: "action",
-      render: () => (
+      render: (record: Book) => (
         <Space size="middle">
-          <Button type="primary" onClick={onEdit}>
+          <Button
+            type="primary"
+            onClick={() => {
+              onEdit(record)
+            }}
+          >
             <Image src="/images/editIcon.png" width={18} height={18} alt="" />
           </Button>
         </Space>
