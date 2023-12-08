@@ -12,9 +12,9 @@ export const config = {
   NODE_ENV: process.env.ENV || process.env.NODE_ENV,
   BACKEND_URL:
     process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000/graphql",
-  // BACKEND_WS_URL:
-  //   process.env.NEXT_PUBLIC_BACKEND_WS_URL ||
-  //   "ws://localhost:4000/subscriptions",
+  BACKEND_WS_URL:
+    process.env.NEXT_PUBLIC_BACKEND_WS_URL ||
+    "ws://localhost:4000/subscriptions",
 }
 
 export enum AuthModalType {
