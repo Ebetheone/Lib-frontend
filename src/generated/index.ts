@@ -537,6 +537,179 @@ export type RefreshAccessTokenMutation = {
   } | null
 }
 
+export type AuthWebMutationVariables = Exact<{
+  input: ExternalWebAuthInput
+}>
+
+export type AuthWebMutation = {
+  __typename?: "Mutation"
+  authWeb?: {
+    __typename?: "AuthVerifyTokenType"
+    accessToken?: string | null
+    refreshToken?: string | null
+  } | null
+}
+
+export type LoginEmailMutationVariables = Exact<{
+  input: LoginEmailInput
+}>
+
+export type LoginEmailMutation = {
+  __typename?: "Mutation"
+  loginEmail?: {
+    __typename?: "AuthVerifyTokenType"
+    accessToken?: string | null
+    refreshToken?: string | null
+    isEmailConfirmed?: boolean | null
+    isPhoneConfirmed?: boolean | null
+    deviceId?: string | null
+    devices?: Array<{
+      __typename?: "UserDevice"
+      id: string
+      deviceName: string
+      deviceType: string
+      deviceOs: string
+    } | null> | null
+  } | null
+}
+
+export type LoginPhoneMutationVariables = Exact<{
+  input: LoginPhoneInput
+}>
+
+export type LoginPhoneMutation = {
+  __typename?: "Mutation"
+  loginPhone?: {
+    __typename?: "AuthVerifyTokenType"
+    accessToken?: string | null
+    refreshToken?: string | null
+    isEmailConfirmed?: boolean | null
+    isPhoneConfirmed?: boolean | null
+    deviceId?: string | null
+    devices?: Array<{
+      __typename?: "UserDevice"
+      id: string
+      deviceName: string
+      deviceType: string
+      deviceOs: string
+    } | null> | null
+  } | null
+}
+
+export type RegisterEmailMutationVariables = Exact<{
+  input: RegisterEmailInput
+}>
+
+export type RegisterEmailMutation = {
+  __typename?: "Mutation"
+  registerEmail?: boolean | null
+}
+
+export type RegisterPhoneMutationVariables = Exact<{
+  input: RegisterPhoneInput
+}>
+
+export type RegisterPhoneMutation = {
+  __typename?: "Mutation"
+  registerPhone?: boolean | null
+}
+
+export type AuthEmailForgetPasswordMutationVariables = Exact<{
+  input: AuthEmailVerifyTokenSenderInput
+}>
+
+export type AuthEmailForgetPasswordMutation = {
+  __typename?: "Mutation"
+  authEmailForgetPassword?: boolean | null
+}
+
+export type AuthEmailResetPasswordMutationVariables = Exact<{
+  input: AuthEmailResetPasswordInput
+}>
+
+export type AuthEmailResetPasswordMutation = {
+  __typename?: "Mutation"
+  authEmailResetPassword?: {
+    __typename?: "AuthVerifyTokenType"
+    accessToken?: string | null
+    refreshToken?: string | null
+    deviceId?: string | null
+    devices?: Array<{
+      __typename?: "UserDevice"
+      id: string
+      deviceName: string
+      deviceType: string
+      deviceOs: string
+    } | null> | null
+  } | null
+}
+
+export type AuthEmailVerifyTokenMutationVariables = Exact<{
+  input: AuthEmailVerifyTokenInput
+}>
+
+export type AuthEmailVerifyTokenMutation = {
+  __typename?: "Mutation"
+  authEmailVerifyToken?: {
+    __typename?: "AuthVerifyTokenType"
+    accessToken?: string | null
+    refreshToken?: string | null
+    resetToken?: string | null
+    deviceId?: string | null
+    devices?: Array<{
+      __typename?: "UserDevice"
+      id: string
+      deviceName: string
+      deviceType: string
+      deviceOs: string
+    } | null> | null
+  } | null
+}
+
+export type AuthEmailVerifyTokenSenderMutationVariables = Exact<{
+  input: AuthEmailVerifyTokenSenderInput
+}>
+
+export type AuthEmailVerifyTokenSenderMutation = {
+  __typename?: "Mutation"
+  authEmailVerifyTokenSender?: boolean | null
+}
+
+export type AccountEliminateMutationVariables = Exact<{
+  input: AccountEliminateInputType
+}>
+
+export type AccountEliminateMutation = {
+  __typename?: "Mutation"
+  accountEliminate?: {
+    __typename?: "AuthVerifyTokenType"
+    accessToken?: string | null
+    refreshToken?: string | null
+    deviceId?: string | null
+  } | null
+}
+
+export type UserQueryVariables = Exact<{
+  input: UserWhereInput
+}>
+
+export type UserQuery = {
+  __typename?: "Query"
+  user?: {
+    __typename?: "User"
+    id: string
+    userId?: string | null
+    role?: UserRoleEnum | null
+    email?: string | null
+    profile?: {
+      __typename?: "UserProfile"
+      id: string
+      firstName?: string | null
+      lastName?: string | null
+    } | null
+  } | null
+}
+
 export const MeAuthDocument = gql`
   query meAuth {
     meAuth {
@@ -690,6 +863,586 @@ export type RefreshAccessTokenMutationOptions = Apollo.BaseMutationOptions<
   RefreshAccessTokenMutation,
   RefreshAccessTokenMutationVariables
 >
+export const AuthWebDocument = gql`
+  mutation authWeb($input: ExternalWebAuthInput!) {
+    authWeb(input: $input) {
+      accessToken
+      refreshToken
+    }
+  }
+`
+export type AuthWebMutationFn = Apollo.MutationFunction<
+  AuthWebMutation,
+  AuthWebMutationVariables
+>
+
+/**
+ * __useAuthWebMutation__
+ *
+ * To run a mutation, you first call `useAuthWebMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAuthWebMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [authWebMutation, { data, loading, error }] = useAuthWebMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAuthWebMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AuthWebMutation,
+    AuthWebMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<AuthWebMutation, AuthWebMutationVariables>(
+    AuthWebDocument,
+    options,
+  )
+}
+export type AuthWebMutationHookResult = ReturnType<typeof useAuthWebMutation>
+export type AuthWebMutationResult = Apollo.MutationResult<AuthWebMutation>
+export type AuthWebMutationOptions = Apollo.BaseMutationOptions<
+  AuthWebMutation,
+  AuthWebMutationVariables
+>
+export const LoginEmailDocument = gql`
+  mutation loginEmail($input: LoginEmailInput!) {
+    loginEmail(input: $input) {
+      accessToken
+      refreshToken
+      isEmailConfirmed
+      isPhoneConfirmed
+      deviceId
+      devices {
+        id
+        deviceName
+        deviceType
+        deviceOs
+      }
+    }
+  }
+`
+export type LoginEmailMutationFn = Apollo.MutationFunction<
+  LoginEmailMutation,
+  LoginEmailMutationVariables
+>
+
+/**
+ * __useLoginEmailMutation__
+ *
+ * To run a mutation, you first call `useLoginEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginEmailMutation, { data, loading, error }] = useLoginEmailMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLoginEmailMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LoginEmailMutation,
+    LoginEmailMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<LoginEmailMutation, LoginEmailMutationVariables>(
+    LoginEmailDocument,
+    options,
+  )
+}
+export type LoginEmailMutationHookResult = ReturnType<
+  typeof useLoginEmailMutation
+>
+export type LoginEmailMutationResult = Apollo.MutationResult<LoginEmailMutation>
+export type LoginEmailMutationOptions = Apollo.BaseMutationOptions<
+  LoginEmailMutation,
+  LoginEmailMutationVariables
+>
+export const LoginPhoneDocument = gql`
+  mutation loginPhone($input: LoginPhoneInput!) {
+    loginPhone(input: $input) {
+      accessToken
+      refreshToken
+      isEmailConfirmed
+      isPhoneConfirmed
+      deviceId
+      devices {
+        id
+        deviceName
+        deviceType
+        deviceOs
+      }
+    }
+  }
+`
+export type LoginPhoneMutationFn = Apollo.MutationFunction<
+  LoginPhoneMutation,
+  LoginPhoneMutationVariables
+>
+
+/**
+ * __useLoginPhoneMutation__
+ *
+ * To run a mutation, you first call `useLoginPhoneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginPhoneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginPhoneMutation, { data, loading, error }] = useLoginPhoneMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLoginPhoneMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LoginPhoneMutation,
+    LoginPhoneMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<LoginPhoneMutation, LoginPhoneMutationVariables>(
+    LoginPhoneDocument,
+    options,
+  )
+}
+export type LoginPhoneMutationHookResult = ReturnType<
+  typeof useLoginPhoneMutation
+>
+export type LoginPhoneMutationResult = Apollo.MutationResult<LoginPhoneMutation>
+export type LoginPhoneMutationOptions = Apollo.BaseMutationOptions<
+  LoginPhoneMutation,
+  LoginPhoneMutationVariables
+>
+export const RegisterEmailDocument = gql`
+  mutation registerEmail($input: RegisterEmailInput!) {
+    registerEmail(input: $input)
+  }
+`
+export type RegisterEmailMutationFn = Apollo.MutationFunction<
+  RegisterEmailMutation,
+  RegisterEmailMutationVariables
+>
+
+/**
+ * __useRegisterEmailMutation__
+ *
+ * To run a mutation, you first call `useRegisterEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerEmailMutation, { data, loading, error }] = useRegisterEmailMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRegisterEmailMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RegisterEmailMutation,
+    RegisterEmailMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    RegisterEmailMutation,
+    RegisterEmailMutationVariables
+  >(RegisterEmailDocument, options)
+}
+export type RegisterEmailMutationHookResult = ReturnType<
+  typeof useRegisterEmailMutation
+>
+export type RegisterEmailMutationResult =
+  Apollo.MutationResult<RegisterEmailMutation>
+export type RegisterEmailMutationOptions = Apollo.BaseMutationOptions<
+  RegisterEmailMutation,
+  RegisterEmailMutationVariables
+>
+export const RegisterPhoneDocument = gql`
+  mutation registerPhone($input: RegisterPhoneInput!) {
+    registerPhone(input: $input)
+  }
+`
+export type RegisterPhoneMutationFn = Apollo.MutationFunction<
+  RegisterPhoneMutation,
+  RegisterPhoneMutationVariables
+>
+
+/**
+ * __useRegisterPhoneMutation__
+ *
+ * To run a mutation, you first call `useRegisterPhoneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterPhoneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerPhoneMutation, { data, loading, error }] = useRegisterPhoneMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRegisterPhoneMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RegisterPhoneMutation,
+    RegisterPhoneMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    RegisterPhoneMutation,
+    RegisterPhoneMutationVariables
+  >(RegisterPhoneDocument, options)
+}
+export type RegisterPhoneMutationHookResult = ReturnType<
+  typeof useRegisterPhoneMutation
+>
+export type RegisterPhoneMutationResult =
+  Apollo.MutationResult<RegisterPhoneMutation>
+export type RegisterPhoneMutationOptions = Apollo.BaseMutationOptions<
+  RegisterPhoneMutation,
+  RegisterPhoneMutationVariables
+>
+export const AuthEmailForgetPasswordDocument = gql`
+  mutation authEmailForgetPassword($input: AuthEmailVerifyTokenSenderInput!) {
+    authEmailForgetPassword(input: $input)
+  }
+`
+export type AuthEmailForgetPasswordMutationFn = Apollo.MutationFunction<
+  AuthEmailForgetPasswordMutation,
+  AuthEmailForgetPasswordMutationVariables
+>
+
+/**
+ * __useAuthEmailForgetPasswordMutation__
+ *
+ * To run a mutation, you first call `useAuthEmailForgetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAuthEmailForgetPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [authEmailForgetPasswordMutation, { data, loading, error }] = useAuthEmailForgetPasswordMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAuthEmailForgetPasswordMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AuthEmailForgetPasswordMutation,
+    AuthEmailForgetPasswordMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    AuthEmailForgetPasswordMutation,
+    AuthEmailForgetPasswordMutationVariables
+  >(AuthEmailForgetPasswordDocument, options)
+}
+export type AuthEmailForgetPasswordMutationHookResult = ReturnType<
+  typeof useAuthEmailForgetPasswordMutation
+>
+export type AuthEmailForgetPasswordMutationResult =
+  Apollo.MutationResult<AuthEmailForgetPasswordMutation>
+export type AuthEmailForgetPasswordMutationOptions = Apollo.BaseMutationOptions<
+  AuthEmailForgetPasswordMutation,
+  AuthEmailForgetPasswordMutationVariables
+>
+export const AuthEmailResetPasswordDocument = gql`
+  mutation authEmailResetPassword($input: AuthEmailResetPasswordInput!) {
+    authEmailResetPassword(input: $input) {
+      accessToken
+      refreshToken
+      deviceId
+      devices {
+        id
+        deviceName
+        deviceType
+        deviceOs
+      }
+    }
+  }
+`
+export type AuthEmailResetPasswordMutationFn = Apollo.MutationFunction<
+  AuthEmailResetPasswordMutation,
+  AuthEmailResetPasswordMutationVariables
+>
+
+/**
+ * __useAuthEmailResetPasswordMutation__
+ *
+ * To run a mutation, you first call `useAuthEmailResetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAuthEmailResetPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [authEmailResetPasswordMutation, { data, loading, error }] = useAuthEmailResetPasswordMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAuthEmailResetPasswordMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AuthEmailResetPasswordMutation,
+    AuthEmailResetPasswordMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    AuthEmailResetPasswordMutation,
+    AuthEmailResetPasswordMutationVariables
+  >(AuthEmailResetPasswordDocument, options)
+}
+export type AuthEmailResetPasswordMutationHookResult = ReturnType<
+  typeof useAuthEmailResetPasswordMutation
+>
+export type AuthEmailResetPasswordMutationResult =
+  Apollo.MutationResult<AuthEmailResetPasswordMutation>
+export type AuthEmailResetPasswordMutationOptions = Apollo.BaseMutationOptions<
+  AuthEmailResetPasswordMutation,
+  AuthEmailResetPasswordMutationVariables
+>
+export const AuthEmailVerifyTokenDocument = gql`
+  mutation AuthEmailVerifyToken($input: AuthEmailVerifyTokenInput!) {
+    authEmailVerifyToken(input: $input) {
+      accessToken
+      refreshToken
+      resetToken
+      deviceId
+      devices {
+        id
+        deviceName
+        deviceType
+        deviceOs
+      }
+    }
+  }
+`
+export type AuthEmailVerifyTokenMutationFn = Apollo.MutationFunction<
+  AuthEmailVerifyTokenMutation,
+  AuthEmailVerifyTokenMutationVariables
+>
+
+/**
+ * __useAuthEmailVerifyTokenMutation__
+ *
+ * To run a mutation, you first call `useAuthEmailVerifyTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAuthEmailVerifyTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [authEmailVerifyTokenMutation, { data, loading, error }] = useAuthEmailVerifyTokenMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAuthEmailVerifyTokenMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AuthEmailVerifyTokenMutation,
+    AuthEmailVerifyTokenMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    AuthEmailVerifyTokenMutation,
+    AuthEmailVerifyTokenMutationVariables
+  >(AuthEmailVerifyTokenDocument, options)
+}
+export type AuthEmailVerifyTokenMutationHookResult = ReturnType<
+  typeof useAuthEmailVerifyTokenMutation
+>
+export type AuthEmailVerifyTokenMutationResult =
+  Apollo.MutationResult<AuthEmailVerifyTokenMutation>
+export type AuthEmailVerifyTokenMutationOptions = Apollo.BaseMutationOptions<
+  AuthEmailVerifyTokenMutation,
+  AuthEmailVerifyTokenMutationVariables
+>
+export const AuthEmailVerifyTokenSenderDocument = gql`
+  mutation authEmailVerifyTokenSender(
+    $input: AuthEmailVerifyTokenSenderInput!
+  ) {
+    authEmailVerifyTokenSender(input: $input)
+  }
+`
+export type AuthEmailVerifyTokenSenderMutationFn = Apollo.MutationFunction<
+  AuthEmailVerifyTokenSenderMutation,
+  AuthEmailVerifyTokenSenderMutationVariables
+>
+
+/**
+ * __useAuthEmailVerifyTokenSenderMutation__
+ *
+ * To run a mutation, you first call `useAuthEmailVerifyTokenSenderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAuthEmailVerifyTokenSenderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [authEmailVerifyTokenSenderMutation, { data, loading, error }] = useAuthEmailVerifyTokenSenderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAuthEmailVerifyTokenSenderMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AuthEmailVerifyTokenSenderMutation,
+    AuthEmailVerifyTokenSenderMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    AuthEmailVerifyTokenSenderMutation,
+    AuthEmailVerifyTokenSenderMutationVariables
+  >(AuthEmailVerifyTokenSenderDocument, options)
+}
+export type AuthEmailVerifyTokenSenderMutationHookResult = ReturnType<
+  typeof useAuthEmailVerifyTokenSenderMutation
+>
+export type AuthEmailVerifyTokenSenderMutationResult =
+  Apollo.MutationResult<AuthEmailVerifyTokenSenderMutation>
+export type AuthEmailVerifyTokenSenderMutationOptions =
+  Apollo.BaseMutationOptions<
+    AuthEmailVerifyTokenSenderMutation,
+    AuthEmailVerifyTokenSenderMutationVariables
+  >
+export const AccountEliminateDocument = gql`
+  mutation AccountEliminate($input: AccountEliminateInputType!) {
+    accountEliminate(input: $input) {
+      accessToken
+      refreshToken
+      deviceId
+    }
+  }
+`
+export type AccountEliminateMutationFn = Apollo.MutationFunction<
+  AccountEliminateMutation,
+  AccountEliminateMutationVariables
+>
+
+/**
+ * __useAccountEliminateMutation__
+ *
+ * To run a mutation, you first call `useAccountEliminateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountEliminateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountEliminateMutation, { data, loading, error }] = useAccountEliminateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountEliminateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AccountEliminateMutation,
+    AccountEliminateMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    AccountEliminateMutation,
+    AccountEliminateMutationVariables
+  >(AccountEliminateDocument, options)
+}
+export type AccountEliminateMutationHookResult = ReturnType<
+  typeof useAccountEliminateMutation
+>
+export type AccountEliminateMutationResult =
+  Apollo.MutationResult<AccountEliminateMutation>
+export type AccountEliminateMutationOptions = Apollo.BaseMutationOptions<
+  AccountEliminateMutation,
+  AccountEliminateMutationVariables
+>
+export const UserDocument = gql`
+  query User($input: UserWhereInput!) {
+    user(input: $input) {
+      id
+      userId
+      role
+      email
+      profile {
+        id
+        firstName
+        lastName
+      }
+    }
+  }
+`
+
+/**
+ * __useUserQuery__
+ *
+ * To run a query within a React component, call `useUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserQuery(
+  baseOptions: Apollo.QueryHookOptions<UserQuery, UserQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options)
+}
+export function useUserLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<UserQuery, UserQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(
+    UserDocument,
+    options,
+  )
+}
+export type UserQueryHookResult = ReturnType<typeof useUserQuery>
+export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>
+export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>
 
 export interface PossibleTypesResultData {
   possibleTypes: {

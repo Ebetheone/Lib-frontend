@@ -16,3 +16,14 @@ export const config = {
     process.env.NEXT_PUBLIC_BACKEND_WS_URL ||
     "ws://localhost:4000/subscriptions",
 }
+
+export enum AuthModalType {
+  Login = "LOGIN",
+  Register = "REGISTER",
+  Forget = "FORGET",
+  NewPassword = "NEW_PASSWORD",
+  ConfirmCode = "CONFIRM_CODE",
+  ChangePassword = "CHANGE_PASSWORD",
+  SessionManage = "SESSION_MANAGE",
+  TokenVerify = "TOKEN_VERIFY",
+}
