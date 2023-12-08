@@ -1,27 +1,35 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "baseUrl": ".",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "paths": {
-      "@/*": ["./src/*"]
+      "src/*": ["src/*"],
+      "components/*": ["src/components/*"],
+      "generated": ["src/generated/index"],
+      "layouts/*": ["src/layouts/*"],
+      "lib/*": ["src/lib/*"],
+      "middleware/*": ["src/middleware/*"],
+      "router/*": ["src/router/*"],
+      "scenes/*": ["src/scenes/*"],
+      "store": ["src/context/index"],
+      "utils/*": ["src/utils/*"],
+      "apexcharts": ["./node_modules/apexcharts-clevision"],
+      "apexcharts/*": ["./node_modules/apexcharts-clevision/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["src", "codegen.ts", "apps/permissions"],
   "exclude": ["node_modules"]
 }
