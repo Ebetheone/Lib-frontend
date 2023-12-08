@@ -5,7 +5,7 @@ const tokenKeys = {
   DEVICE_ID: "device-id",
   DEVICE_TYPE: "device-type",
   WS_TOKEN_KEY: "ws-token",
-};
+}
 
 export const config = {
   ...tokenKeys,
@@ -15,4 +15,4 @@ export const config = {
   BACKEND_WS_URL:
     process.env.NEXT_PUBLIC_BACKEND_WS_URL ||
     "ws://localhost:4000/subscriptions",
-};
+}
