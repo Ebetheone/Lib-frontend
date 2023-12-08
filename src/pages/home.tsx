@@ -1,3 +1,12 @@
+/*
+
+* @author: Sarnai
+* @version: 1.0.0
+* @date: 2023:12:08
+* @improvements: Home screen drawing
+
+*/
+
 import React, { useState } from "react"
 import Image from "next/image"
 
@@ -14,11 +23,14 @@ enum ChildrensEnum {
 }
 
 const Home = () => {
-  const [tab, setTab] = useState<ChildrensEnum>(ChildrensEnum.BookList)
+  const [tab, setTab] = useState<ChildrensEnum>(ChildrensEnum.BookDetail)
 
   const childrens: Record<ChildrensEnum, React.JSX.Element> = {
     [ChildrensEnum.BookDetail]: (
-      <BookDetail onBack={() => setTab(ChildrensEnum.BookList)} />
+      <BookDetail
+        onBack={() => setTab(ChildrensEnum.BookList)}
+        isAdmin={true}
+      />
     ),
     [ChildrensEnum.BookList]: (
       <BookList onClickBook={() => setTab(ChildrensEnum.BookDetail)} />
@@ -31,6 +43,8 @@ const Home = () => {
   return (
     <div className="flex w-screen h-screen bg-[#E8E8E8] ">
       <TabBar
+        isAdmin={true}
+        onExit={() => {}}
         onClickBook={() => setTab(ChildrensEnum.BookList)}
         onClickProfile={() => setTab(ChildrensEnum.Profile)}
       />
