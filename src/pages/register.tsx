@@ -1,77 +1,38 @@
 import React from "react"
-import { Button, Checkbox, Form, Input } from "antd"
-import crypto from "crypto-js"
+import { Button, Form, Input } from "antd"
 import { MailOutlined, LockOutlined } from "@ant-design/icons"
-import { showError } from "src/utils/errorHandler"
-import { LoginEmailInput, useLoginEmailMutation } from "src/generated"
-import { removeItemToken, setItemToken } from "src/lib/apollo/tokenHandler"
-import { AuthModalType, config } from "src/config"
+import { RegisterEmailInput, useRegisterEmailMutation } from "src/generated"
 import { useRouter } from "next/router"
 import { useAuthModalContext } from "src/hooks/useAuth"
-import { handleAuthDialog } from "src/utils/handleAuthDialog"
-import { useApolloClient } from "@apollo/client"
 
 const { useForm } = Form
 
-interface LoginEmailType {
-  email: string | undefined
-  password: string | undefined
-  remember: boolean
-}
-
-const Login = () => {
+const Register = () => {
   const [form] = useForm()
   const router = useRouter()
-  const apolloClient = useApolloClient()
 
-  const { reset, setUserData, setSessionList } = useAuthModalContext()
+  const { setUserData } = useAuthModalContext()
 
-  const [onLoginEmail, { loading: loadingEmail }] = useLoginEmailMutation({
+  const [onRegisterEmail] = useRegisterEmailMutation({
     fetchPolicy: "no-cache",
-    onError: (error) => {
-      showError(error)
+    onError: (error: unknown) => {
+      alert(error)
     },
-    onCompleted: (data) => {},
   })
 
-  const handleSubmit = async (values: LoginEmailType) => {
-    if (values?.remember) {
-      localStorage.setItem(
-        "credentials-email",
-        crypto.AES.encrypt(
-          JSON.stringify({ ...values, remember: values?.remember }),
-          "lib_credentials_secret",
-        ).toString(),
-      )
-    } else localStorage.removeItem("credentials-email")
+  const handleSubmit = async (values: RegisterEmailInput) => {
+    setUserData(values as RegisterEmailInput)
 
-    setUserData(values as LoginEmailInput)
-
-    const { data } = await onLoginEmail({
+    const { data } = await onRegisterEmail({
       variables: {
         input: {
-          email: values?.email || "",
-          password: values.password || "",
-          deviceId: localStorage.getItem(config.DEVICE_ID),
+          email: values?.email,
+          password: values?.password,
         },
       },
     })
-    if (data?.loginEmail) {
-      if (data?.loginEmail?.deviceId)
-        localStorage.setItem(config.DEVICE_ID, data.loginEmail?.deviceId)
-
-      removeItemToken(null)
-      if (data.loginEmail.accessToken) {
-        setItemToken(data?.loginEmail)
-        handleAuthDialog({ apolloClient, router })
-      } else if (data.loginEmail.devices) {
-        setSessionList(data.loginEmail.devices)
-        // setVisibleAuthDialog(AuthModalType.SessionManage)
-      } else if (data?.loginEmail && !data?.loginEmail?.isEmailConfirmed) {
-        // setVisibleAuthDialog(AuthModalType.TokenVerify)
-      } else if (reset) {
-        // setVisibleAuthDialog(AuthModalType.ChangePassword)
-      }
+    if (data?.registerEmail) {
+      router.push("/home")
     }
   }
 
@@ -92,7 +53,7 @@ const Login = () => {
       <div className="w-100 h-screen bg-[rgb(220,220,220)] flex items-center justify-center">
         <div className="min-w-[500px] flex items-center justify-center flex-col bg-white py-[50px] rounded-[20px]">
           <div className="text-[rgb(0,0,0)] text-[28px] font-[700] pb-10">
-            Нэвтрэх
+            Бүртгүүлэх
           </div>
           <div className="w-8/12 flex flex-col items-start justify-center gap-[5px]">
             <div className="text-[rgb(0,0,0)] text-[14px] font-[500]">
@@ -144,11 +105,27 @@ const Login = () => {
               />
             </Form.Item>
           </div>
-          <div className="w-8/12 flex flex-col items-start justify-center">
-            <Form.Item name="remember" valuePropName="checked">
-              <Checkbox className="font-[500] text-[12px]">
-                Нууц үг санах
-              </Checkbox>
+          <div className="w-8/12 flex flex-col items-start justify-center gap-[5px]">
+            <div className="text-[rgb(0,0,0)] text-[14px] font-[500]">
+              Нууц үг давтах <strong className="text-[rgb(200,0,0)]">*</strong>
+            </div>
+            <Form.Item
+              style={{ width: "100%" }}
+              name="confirmPassword"
+              rules={[
+                {
+                  required: true,
+                  message: "Нууц үгээ оруулна уу",
+                },
+              ]}
+            >
+              <Input.Password
+                size="large"
+                placeholder="Нууц үг"
+                prefix={<LockOutlined className="mr-2" />}
+                type="password"
+                name="confirmPassword"
+              />
             </Form.Item>
           </div>
           <div className="w-8/12 flex flex-col items-start justify-center gap-[20px]">
@@ -159,9 +136,8 @@ const Login = () => {
               block
               htmlType="submit"
               className="w-full"
-              loading={loadingEmail}
             >
-              Нэвтрэх
+              Бүртгүүлэх
             </Button>
             <Button
               type="primary"
@@ -173,9 +149,9 @@ const Login = () => {
               }}
               block
               className="w-full"
-              onClick={() => router.push("/register")}
+              onClick={() => router.push("/")}
             >
-              Бүртгүүлэх
+              Нэвтрэх
             </Button>
           </div>
         </div>
@@ -184,4 +160,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register

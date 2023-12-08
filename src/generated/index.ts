@@ -103,9 +103,11 @@ export type Book = {
   category: Scalars["String"]
   createdAt: Scalars["DateTime"]
   id: Scalars["ID"]
+  image?: Maybe<Scalars["String"]>
   limit: Scalars["Int"]
   name: Scalars["String"]
   price: Scalars["Int"]
+  publisher: Scalars["String"]
   updatedAt: Scalars["DateTime"]
   user?: Maybe<User>
   userId: Scalars["String"]
@@ -114,9 +116,11 @@ export type Book = {
 export type BookInput = {
   bestSeller: Scalars["Boolean"]
   category: Scalars["String"]
+  image?: InputMaybe<Scalars["String"]>
   limit: Scalars["Int"]
   name: Scalars["String"]
   price: Scalars["Int"]
+  publisher: Scalars["String"]
 }
 
 export type BookWhereInput = {
@@ -127,6 +131,7 @@ export type BookWhereInput = {
   limit?: InputMaybe<Scalars["Int"]>
   name?: InputMaybe<Scalars["String"]>
   price?: InputMaybe<Scalars["Int"]>
+  publisher?: InputMaybe<Scalars["String"]>
   search?: InputMaybe<Scalars["String"]>
 }
 
@@ -753,6 +758,8 @@ export type BookQuery = {
     category: string
     price: number
     bestSeller: boolean
+    publisher: string
+    image?: string | null
     userId: string
     createdAt: any
     updatedAt: any
@@ -780,7 +787,9 @@ export type BooksQuery = {
       limit: number
       category: string
       price: number
+      image?: string | null
       bestSeller: boolean
+      publisher: string
       userId: string
       createdAt: any
       updatedAt: any
@@ -1678,6 +1687,8 @@ export const BookDocument = gql`
       category
       price
       bestSeller
+      publisher
+      image
       userId
       createdAt
       updatedAt
@@ -1738,7 +1749,9 @@ export const BooksDocument = gql`
         limit
         category
         price
+        image
         bestSeller
+        publisher
         userId
         createdAt
         updatedAt

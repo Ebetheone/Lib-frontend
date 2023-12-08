@@ -26,6 +26,8 @@ export const BOOK = gql`
       category
       price
       bestSeller
+      publisher
+      image
       userId
       createdAt
       updatedAt
@@ -52,7 +54,9 @@ export const BOOKS = gql`
         limit
         category
         price
+        image
         bestSeller
+        publisher
         userId
         createdAt
         updatedAt
