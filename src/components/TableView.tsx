@@ -12,12 +12,14 @@ import { Button, Space, Table } from "antd"
 import Image from "next/image"
 import { Book } from "src/generated"
 
+//Хүснэгтэд авах өгөгдлийн төрөл зарлах
 type TableViewProps = {
   onEdit: (book: Book) => void
+  addBook: () => void
   data: Book[] | []
 }
 
-export default function TableView({ data, onEdit }: TableViewProps) {
+export default function TableView({ data, onEdit, addBook }: TableViewProps) {
   const columns = [
     {
       title: "ID",
@@ -75,7 +77,10 @@ export default function TableView({ data, onEdit }: TableViewProps) {
           scroll={{ y: "calc(60vh)" }}
         />
       </div>
-      <button className="bg-white text-black border-[2px] border-[#C4C4C4] w-[190px] rounded-[22px] h-[40px] mt-[8px]">
+      <button
+        className="bg-white text-black border-[2px] border-[#C4C4C4] w-[190px] rounded-[22px] h-[40px] mt-[8px]"
+        onClick={addBook}
+      >
         Ном нэмэх
       </button>
     </div>

@@ -1,6 +1,6 @@
 /*
 
-* @author: Sarnai
+* @author: Elbeg
 * @version: 1.0.0
 * @date: 2023:12:08
 * @improvements: BookDetail screen drawing
@@ -12,6 +12,7 @@ import React from "react"
 import { Book, BookInput, useUpdateBookMutation } from "src/generated"
 import { showError } from "src/utils/errorHandler"
 
+//Номны дэлгэрэнгүй хэсэгүийн үйлдлийн төрөл
 type BookDetailsProps = {
   onBack: () => void
   book: Book | null
