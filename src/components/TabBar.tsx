@@ -2,6 +2,9 @@ import React from "react"
 import Image from "next/image"
 
 export default function TabBar() {
+
+  console.log("haha");
+
   return (
     <div className="bg-white h-screen w-80 rounded-tr-[45px] rounded-br-[45px] p-[30px]">
       <div className="flex">
