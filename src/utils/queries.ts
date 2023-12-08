@@ -9,6 +9,7 @@ export const USER = gql`
       email
       phone
       countryCode
+      status
       profile {
         gender
         birthday
@@ -85,7 +86,6 @@ export const USERS = gql`
     $skip: Int!
   ) {
     users(input: $input, orderBy: $orderBy, take: $take, skip: $skip) {
-      id
       count
       data {
         id
@@ -94,6 +94,7 @@ export const USERS = gql`
         email
         phone
         countryCode
+        status
         profile {
           gender
           birthday

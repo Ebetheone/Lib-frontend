@@ -16,7 +16,7 @@
 
 */
 
-import React, { useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import Image from "next/image"
 
 import Container from "src/components/Container"
@@ -26,9 +26,14 @@ import BookDetail from "src/components/BookDetail"
 import Profile from "src/components/Profile"
 import { useAuth } from "src/hooks/useAuth"
 import TableView from "src/components/TableView"
-import { Book, useBooksQuery } from "src/generated"
+import { Book, useBooksQuery, useUsersQuery } from "src/generated"
 import { showError } from "src/utils/errorHandler"
 import UserTable from "src/components/UserTable"
+import { config } from "src/config"
+import { useApolloClient } from "@apollo/client"
+import { LOGOUT } from "src/hooks/utils/queries"
+import { removeItemToken } from "src/lib/apollo/tokenHandler"
+import { useRouter } from "next/router"
 
 // Tab Navigation enums
 enum ChildrensEnum {
@@ -42,6 +47,14 @@ enum ChildrensEnum {
 const Home = () => {
   const { user } = useAuth()
   const isAdmin = user?.role === "ADMIN"
+  const router = useRouter()
+  const apolloClient = useApolloClient()
+
+  useEffect(
+    useCallback(() => {
+      refetch()
+    }, []),
+  )
 
   const [tab, setTab] = useState<ChildrensEnum>(
     isAdmin ? ChildrensEnum.Table : ChildrensEnum.BookList,
@@ -51,7 +64,7 @@ const Home = () => {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null)
 
   // Бүх номны датаг өгөгдлийн сангаас татах
-  const { data } = useBooksQuery({
+  const { data, refetch } = useBooksQuery({
     fetchPolicy: "no-cache",
     variables: {
       input: {},
@@ -63,6 +76,29 @@ const Home = () => {
     },
   })
 
+  const { data: users, refetch: refetchUser } = useUsersQuery({
+    fetchPolicy: "no-cache",
+    variables: {
+      input: {},
+      take: 20,
+      skip: 0,
+    },
+    onError: (error) => {
+      showError(error)
+    },
+  })
+
+  const handleLogout = async () => {
+    const deviceId = localStorage.getItem(config.DEVICE_ID)
+    await apolloClient.mutate({
+      mutation: LOGOUT,
+      variables: { deviceId: deviceId },
+    })
+    removeItemToken(null)
+    await apolloClient.cache.reset()
+    router.replace("/")
+  }
+
   const childrens: Record<ChildrensEnum, React.JSX.Element> = {
     [ChildrensEnum.BookDetail]: (
       <BookDetail
@@ -71,6 +107,7 @@ const Home = () => {
           setTab(isAdmin ? ChildrensEnum.Table : ChildrensEnum.BookList)
         }
         isAdmin={isAdmin}
+        refetch={() => refetch()}
       />
     ),
     [ChildrensEnum.BookList]: (
@@ -96,10 +133,14 @@ const Home = () => {
           await setSelectedBook(book)
           await setTab(ChildrensEnum.BookDetail)
         }}
+        refetch={() => refetch()}
       />
     ),
     [ChildrensEnum.UserTable]: (
-      <UserTable data={[]} onAddUser={() => setTab(ChildrensEnum.Profile)} />
+      <UserTable
+        data={users?.users?.data}
+        onAddUser={() => setTab(ChildrensEnum.Profile)}
+      />
     ),
   }
 
@@ -107,9 +148,7 @@ const Home = () => {
     <div className="flex w-full h-full bg-[#E8E8E8] ">
       <TabBar
         isAdmin={true}
-        onExit={() => {
-          // Аккаунтаас гарах
-        }}
+        onExit={handleLogout}
         onClickBook={() =>
           setTab(isAdmin ? ChildrensEnum.Table : ChildrensEnum.BookList)
         }

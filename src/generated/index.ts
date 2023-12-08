@@ -760,9 +760,9 @@ export type UserQuery = {
     email?: string | null
     phone?: string | null
     countryCode?: string | null
+    status?: UserStatusEnum | null
     profile?: {
       __typename?: "UserProfile"
-      id: string
       gender?: Gender | null
       birthday?: any | null
       firstName?: string | null
@@ -829,6 +829,45 @@ export type BooksQuery = {
       createdAt: any
       updatedAt: any
       user?: { __typename?: "User"; id: string } | null
+    }> | null
+  } | null
+}
+
+export type UsersQueryVariables = Exact<{
+  input?: InputMaybe<UserWhereInput>
+  orderBy?: InputMaybe<Scalars["String"]>
+  take: Scalars["Int"]
+  skip: Scalars["Int"]
+}>
+
+export type UsersQuery = {
+  __typename?: "Query"
+  users?: {
+    __typename?: "UsersType"
+    count?: number | null
+    data?: Array<{
+      __typename?: "User"
+      id: string
+      userId?: string | null
+      role?: UserRoleEnum | null
+      email?: string | null
+      phone?: string | null
+      countryCode?: string | null
+      status?: UserStatusEnum | null
+      profile?: {
+        __typename?: "UserProfile"
+        gender?: Gender | null
+        birthday?: any | null
+        firstName?: string | null
+        lastName?: string | null
+      } | null
+      address?: {
+        __typename?: "Address"
+        city: string
+        district: string
+        address1: string
+        address2: string
+      } | null
     }> | null
   } | null
 }
@@ -1721,8 +1760,8 @@ export const UserDocument = gql`
       email
       phone
       countryCode
+      status
       profile {
-        id
         gender
         birthday
         firstName
@@ -1900,6 +1939,83 @@ export type BooksLazyQueryHookResult = ReturnType<typeof useBooksLazyQuery>
 export type BooksQueryResult = Apollo.QueryResult<
   BooksQuery,
   BooksQueryVariables
+>
+export const UsersDocument = gql`
+  query USERS(
+    $input: UserWhereInput
+    $orderBy: String
+    $take: Int!
+    $skip: Int!
+  ) {
+    users(input: $input, orderBy: $orderBy, take: $take, skip: $skip) {
+      count
+      data {
+        id
+        userId
+        role
+        email
+        phone
+        countryCode
+        status
+        profile {
+          gender
+          birthday
+          firstName
+          lastName
+        }
+        address {
+          city
+          district
+          address1
+          address2
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useUsersQuery__
+ *
+ * To run a query within a React component, call `useUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUsersQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *      orderBy: // value for 'orderBy'
+ *      take: // value for 'take'
+ *      skip: // value for 'skip'
+ *   },
+ * });
+ */
+export function useUsersQuery(
+  baseOptions: Apollo.QueryHookOptions<UsersQuery, UsersQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<UsersQuery, UsersQueryVariables>(
+    UsersDocument,
+    options,
+  )
+}
+export function useUsersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<UsersQuery, UsersQueryVariables>(
+    UsersDocument,
+    options,
+  )
+}
+export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>
+export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>
+export type UsersQueryResult = Apollo.QueryResult<
+  UsersQuery,
+  UsersQueryVariables
 >
 
 export interface PossibleTypesResultData {
