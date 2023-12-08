@@ -44,7 +44,7 @@ export default function BookList({ onClickBook }: BookListProps) {
       <div className="flex items-center w-full">
         <div className="flex-[8]">
           <SearchContainer
-            value={input}
+            sValue={input}
             setValue={setInput}
             onSearch={() => console.log("search")}
           />

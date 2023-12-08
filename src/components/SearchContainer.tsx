@@ -10,14 +10,15 @@
 import React, { Dispatch } from "react"
 
 type SearchContainerProps = {
-  value: string
+  sValue: string
   setValue: Dispatch<string>
   onSearch: () => void
 }
 
+// Өгөгдөл хайх компонент
 export default function SearchContainer({
   setValue,
-  value,
+  sValue,
   onSearch,
 }: SearchContainerProps) {
   return (
@@ -27,17 +28,9 @@ export default function SearchContainer({
           placeholder="ХАЙХ"
           type="search"
           className="block w-full p-4 ps-10 text-sm text-gray-900 border border-[#E8E8E8] rounded-[20px] bg-white"
-          value={value}
+          value={sValue}
           onChange={(e) => setValue(e.target.value)}
         />
-        {/* <button onClick={onSearch} className="absolute end-[100px]">
-          <Image
-            src="/images/searchIcon.png"
-            width={24}
-            height={24}
-            alt="icon"
-          />
-        </button> */}
       </div>
     </div>
   )

@@ -8,26 +8,27 @@
 */
 import React, { Dispatch } from "react"
 
+// Хэрэглэчээс оролт авах мөн гарчигтай компонент
 type InputWithLabelProps = {
   title: string
-  value: string
+  sValue: string
   setValue: Dispatch<string>
-  disable: boolean
+  bDisable: boolean
 }
 
 export default function InputWithLabel({
-  disable,
+  bDisable,
   setValue,
   title,
-  value,
+  sValue,
 }: InputWithLabelProps) {
   return (
     <div className="flex flex-col text-[#182747] text-[14px] font-normal w-full">
       {title} *
       <input
-        value={value}
+        value={sValue}
         onChange={(e) => setValue(e.target.value)}
-        disabled={disable}
+        disabled={bDisable}
         className="block bg-[#F9FAFC] w-full rounded-[20px] p-[8px] h-[40px] text-[#182747] font-normal text-[14px] border border-[#DEDEDE] mt-[5px]"
       />
     </div>
