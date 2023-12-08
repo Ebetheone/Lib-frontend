@@ -44,7 +44,6 @@ const Home = () => {
   })
 
   const { user } = useAuth()
-  console.log("user", user)
 
   const childrens: Record<ChildrensEnum, React.JSX.Element> = {
     [ChildrensEnum.BookDetail]: (
