@@ -36,6 +36,7 @@ enum ChildrensEnum {
   BookList = "BookList",
   Profile = "Profile",
   Table = "Table",
+  UserTable = "UserTable",
 }
 
 const Home = () => {
@@ -49,6 +50,7 @@ const Home = () => {
   // Book selected state management
   const [selectedBook, setSelectedBook] = useState<Book | null>(null)
 
+  // Бүх номны датаг өгөгдлийн сангаас татах
   const { data } = useBooksQuery({
     fetchPolicy: "no-cache",
     variables: {

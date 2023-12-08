@@ -44,6 +44,7 @@ const Login = () => {
 
   const { setUserData, setSessionList } = useAuthModalContext()
 
+  // Хэрэглэгчийн нэвтрэх үйл явцийг шалгах
   const [onLoginEmail, { loading: loadingEmail }] = useLoginEmailMutation({
     fetchPolicy: "no-cache",
     onError: (error) => {
