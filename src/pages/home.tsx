@@ -17,6 +17,8 @@ import BookDetail from "src/components/BookDetail"
 import Profile from "src/components/Profile"
 import { useAuth } from "src/hooks/useAuth"
 import TableView from "src/components/TableView"
+import { useBooksQuery } from "src/generated"
+import { showError } from "src/utils/errorHandler"
 
 enum ChildrensEnum {
   BookDetail = "BookDetail",
@@ -29,7 +31,20 @@ const Home = () => {
   const [tab, setTab] = useState<ChildrensEnum>(ChildrensEnum.Table)
   const [selectedBook, setSelectedBook] = useState(null)
 
+  const { data, error } = useBooksQuery({
+    fetchPolicy: "no-cache",
+    variables: {
+      input: {},
+      take: 20,
+      skip: 0,
+    },
+    onError: (error) => {
+      showError(error)
+    },
+  })
+
   const { user } = useAuth()
+  console.log("user", user)
 
   const childrens: Record<ChildrensEnum, React.JSX.Element> = {
     [ChildrensEnum.BookDetail]: (
@@ -50,11 +65,13 @@ const Home = () => {
     [ChildrensEnum.Profile]: (
       <Profile onExit={() => setTab(ChildrensEnum.BookList)} />
     ),
-    [ChildrensEnum.Table]: <TableView onEdit={() => console.log("hoh")} />,
+    [ChildrensEnum.Table]: (
+      <TableView data={data?.books?.data} onEdit={() => console.log("hoh")} />
+    ),
   }
 
   return (
-    <div className="flex w-screen h-screen bg-[#E8E8E8] ">
+    <div className="flex w-full h-full bg-[#E8E8E8] ">
       <TabBar
         isAdmin={true}
         onExit={() => {}}

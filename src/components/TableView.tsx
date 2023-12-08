@@ -10,48 +10,14 @@ import React from "react"
 
 import { Button, Space, Table } from "antd"
 import Image from "next/image"
-
-interface DataType {
-  id: string
-  name: string
-  writer: string
-  type: string
-  releasedYear: number
-  remains: number
-}
+import { Book } from "src/generated"
 
 type TableViewProps = {
   onEdit: () => void
+  data: Book[] | []
 }
 
-const data: DataType[] = [
-  {
-    id: "1",
-    name: "John Brown",
-    writer: "Hello",
-    type: "New York No. 1 Lake Park",
-    releasedYear: 2018,
-    remains: 20,
-  },
-  {
-    id: "2",
-    name: "Jim Green",
-    writer: "Hello",
-    type: "London No. 1 Lake Park",
-    releasedYear: 2018,
-    remains: 20,
-  },
-  {
-    id: "3",
-    name: "Joe Black",
-    writer: "Hello",
-    type: "Sydney No. 1 Lake Park",
-    releasedYear: 2018,
-    remains: 20,
-  },
-]
-
-export default function TableView({ onEdit }: TableViewProps) {
+export default function TableView({ data, onEdit }: TableViewProps) {
   const columns = [
     {
       title: "ID",
@@ -65,23 +31,23 @@ export default function TableView({ onEdit }: TableViewProps) {
     },
     {
       title: "Writer",
-      dataIndex: "writer",
-      key: "writer",
+      dataIndex: "publisher",
+      key: "publisher",
     },
     {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
     },
     {
       title: "Released Year",
-      dataIndex: "releasedYear",
-      key: "releasedYear",
+      dataIndex: "createdAt",
+      key: "createdAt",
     },
     {
       title: "Remains",
-      dataIndex: "remains",
-      key: "remains",
+      dataIndex: "limit",
+      key: "limit",
     },
     {
       title: "Action",
@@ -97,11 +63,11 @@ export default function TableView({ onEdit }: TableViewProps) {
   ]
   return (
     <div className="flex flex-col w-full h-full items-center">
-      <div style={{ height: "100vh" }}>
+      <div className="h-full w-full">
         <Table
-          dataSource={data}
+          dataSource={data || []}
           columns={columns}
-          scroll={{ y: "calc(100vh - 48px)" }}
+          scroll={{ y: "calc(60vh)" }}
         />
       </div>
       <button className="bg-white text-black border-[2px] border-[#C4C4C4] w-[190px] rounded-[22px] h-[40px] mt-[8px]">
