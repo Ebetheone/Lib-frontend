@@ -15,3 +15,51 @@ export const USER = gql`
     }
   }
 `
+
+export const BOOK = gql`
+  query BOOK($id: String!) {
+    book(id: $id) {
+      id
+      bookId
+      name
+      limit
+      category
+      price
+      bestSeller
+      userId
+      createdAt
+      updatedAt
+      user {
+        id
+      }
+    }
+  }
+`
+
+export const BOOKS = gql`
+  query BOOKS(
+    $input: BookWhereInput
+    $orderBy: String
+    $take: Int!
+    $skip: Int!
+  ) {
+    books(input: $input, orderBy: $orderBy, take: $take, skip: $skip) {
+      count
+      data {
+        id
+        bookId
+        name
+        limit
+        category
+        price
+        bestSeller
+        userId
+        createdAt
+        updatedAt
+        user {
+          id
+        }
+      }
+    }
+  }
+`

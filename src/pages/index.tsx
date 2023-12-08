@@ -31,46 +31,46 @@ const Login = () => {
     onCompleted: (data) => {},
   })
 
-  // const handleSubmit = async (values: LoginEmailType) => {
-  //   if (values?.remember) {
-  //     localStorage.setItem(
-  //       "credentials-email",
-  //       crypto.AES.encrypt(
-  //         JSON.stringify({ ...values, remember: values?.remember }),
-  //         "lib_credentials_secret",
-  //       ).toString(),
-  //     )
-  //   } else localStorage.removeItem("credentials-email")
+  const handleSubmit = async (values: LoginEmailType) => {
+    if (values?.remember) {
+      localStorage.setItem(
+        "credentials-email",
+        crypto.AES.encrypt(
+          JSON.stringify({ ...values, remember: values?.remember }),
+          "lib_credentials_secret",
+        ).toString(),
+      )
+    } else localStorage.removeItem("credentials-email")
 
-  //   setUserData(values as LoginEmailInput)
+    setUserData(values as LoginEmailInput)
 
-  //   const { data } = await onLoginEmail({
-  //     variables: {
-  //       input: {
-  //         email: values?.email || "",
-  //         password: values.password || "",
-  //         deviceId: localStorage.getItem(config.DEVICE_ID),
-  //       },
-  //     },
-  //   })
-  //   if (data?.loginEmail) {
-  //     if (data?.loginEmail?.deviceId)
-  //       localStorage.setItem(config.DEVICE_ID, data.loginEmail?.deviceId)
+    const { data } = await onLoginEmail({
+      variables: {
+        input: {
+          email: values?.email || "",
+          password: values.password || "",
+          deviceId: localStorage.getItem(config.DEVICE_ID),
+        },
+      },
+    })
+    if (data?.loginEmail) {
+      if (data?.loginEmail?.deviceId)
+        localStorage.setItem(config.DEVICE_ID, data.loginEmail?.deviceId)
 
-  //     removeItemToken(null)
-  //     if (data.loginEmail.accessToken) {
-  //       setItemToken(data?.loginEmail)
-  //       // handleAuthDialog({ apolloClient, router })
-  //     } else if (data.loginEmail.devices) {
-  //       setSessionList(data.loginEmail.devices)
-  //       // setVisibleAuthDialog(AuthModalType.SessionManage)
-  //     } else if (data?.loginEmail && !data?.loginEmail?.isEmailConfirmed) {
-  //       // setVisibleAuthDialog(AuthModalType.TokenVerify)
-  //     } else if (reset) {
-  //       // setVisibleAuthDialog(AuthModalType.ChangePassword)
-  //     }
-  //   }
-  // }
+      removeItemToken(null)
+      if (data.loginEmail.accessToken) {
+        setItemToken(data?.loginEmail)
+        // handleAuthDialog({ apolloClient, router })
+      } else if (data.loginEmail.devices) {
+        setSessionList(data.loginEmail.devices)
+        // setVisibleAuthDialog(AuthModalType.SessionManage)
+      } else if (data?.loginEmail && !data?.loginEmail?.isEmailConfirmed) {
+        // setVisibleAuthDialog(AuthModalType.TokenVerify)
+      } else if (reset) {
+        // setVisibleAuthDialog(AuthModalType.ChangePassword)
+      }
+    }
+  }
 
   return (
     <Form

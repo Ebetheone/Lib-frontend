@@ -108,3 +108,25 @@ export const ACCOUNT_ELIMINATE = gql`
     }
   }
 `
+
+export const CREATE_BOOK = gql`
+  mutation CREATE_BOOK($input: BookInput!) {
+    createBook(input: $input) {
+      id
+    }
+  }
+`
+
+export const UPDATE_BOOK = gql`
+  mutation UPDATE_BOOK($id: String!, $input: BookInput!) {
+    updateBook(id: $id, input: $input) {
+      id
+    }
+  }
+`
+
+export const DELETE_BOOK = gql`
+  mutation DELETE_BOOK($bookId: String!) {
+    deleteBook(bookId: $bookId)
+  }
+`
