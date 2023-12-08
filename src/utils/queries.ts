@@ -10,7 +10,6 @@ export const USER = gql`
       phone
       countryCode
       profile {
-        id
         gender
         birthday
         firstName
@@ -72,6 +71,40 @@ export const BOOKS = gql`
         updatedAt
         user {
           id
+        }
+      }
+    }
+  }
+`
+
+export const USERS = gql`
+  query USERS(
+    $input: UserWhereInput
+    $orderBy: String
+    $take: Int!
+    $skip: Int!
+  ) {
+    users(input: $input, orderBy: $orderBy, take: $take, skip: $skip) {
+      id
+      count
+      data {
+        id
+        userId
+        role
+        email
+        phone
+        countryCode
+        profile {
+          gender
+          birthday
+          firstName
+          lastName
+        }
+        address {
+          city
+          district
+          address1
+          address2
         }
       }
     }

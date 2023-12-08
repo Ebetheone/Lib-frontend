@@ -25,18 +25,18 @@ enum ChildrensEnum {
   BookList = "BookList",
   Profile = "Profile",
   Table = "Table",
-  User,
 }
 
 const Home = () => {
-  const isAdmin = true
+  const { user } = useAuth()
+  const isAdmin = user?.role === "ADMIN"
 
   const [tab, setTab] = useState<ChildrensEnum>(
     isAdmin ? ChildrensEnum.Table : ChildrensEnum.BookList,
   )
   const [selectedBook, setSelectedBook] = useState<Book | null>(null)
 
-  const { data, error } = useBooksQuery({
+  const { data } = useBooksQuery({
     fetchPolicy: "no-cache",
     variables: {
       input: {},
@@ -47,8 +47,6 @@ const Home = () => {
       showError(error)
     },
   })
-
-  const { user } = useAuth()
 
   const childrens: Record<ChildrensEnum, React.JSX.Element> = {
     [ChildrensEnum.BookDetail]: (
