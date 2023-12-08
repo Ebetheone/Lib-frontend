@@ -7,6 +7,15 @@
 
 */
 
+/*
+
+* @author: Elbeg
+* @version: 1.0.0
+* @date: 2023:12:08
+* @improvements: fetching user data
+
+*/
+
 import React, { useState } from "react"
 import Image from "next/image"
 import dayjs from "dayjs"
@@ -31,7 +40,7 @@ type ProfileProps = {
 export default function Profile({ onExit }: ProfileProps) {
   const [form] = Form.useForm()
   const [userId, setUserId] = useState("")
-
+  // Form input edit management
   const [disabled, setDisabled] = useState(true)
 
   useUserQuery({
@@ -69,7 +78,7 @@ export default function Profile({ onExit }: ProfileProps) {
   const handleChange = (value: string) => {
     console.log(`selected ${value}`)
   }
-
+  // Хэрэглэгчийн өгөгдлийн шинэчлэх
   const [onUpdateUser] = useUpdateUserMutation({
     onCompleted: async () => {
       message.success("Мэдээлэл амжилттай солигдлоо.")

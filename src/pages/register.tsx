@@ -1,3 +1,21 @@
+/*
+
+* @author: Elbeg
+* @version: 1.0.0
+* @date: 2023:12:08
+* @improvements: Register screen drawing with logical
+
+*/
+
+/*
+
+* @author: Elbeg
+* @version: 1.0.0
+* @date: 2023:12:08
+* @improvements: Add user to dataBase
+
+*/
+
 import React from "react"
 import { Button, Form, Input } from "antd"
 import { MailOutlined, LockOutlined } from "@ant-design/icons"

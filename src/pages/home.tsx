@@ -7,6 +7,15 @@
 
 */
 
+/*
+
+* @author: Elbeg
+* @version: 1.0.0
+* @date: 2023:12:08
+* @improvements: fetching book data
+
+*/
+
 import React, { useState } from "react"
 import Image from "next/image"
 
@@ -19,23 +28,28 @@ import { useAuth } from "src/hooks/useAuth"
 import TableView from "src/components/TableView"
 import { Book, useBooksQuery } from "src/generated"
 import { showError } from "src/utils/errorHandler"
+import UserTable from "src/components/UserTable"
 
+// Tab Navigation enums
 enum ChildrensEnum {
   BookDetail = "BookDetail",
   BookList = "BookList",
   Profile = "Profile",
   Table = "Table",
-  User,
+  UserTable = "UserTable",
 }
 
 const Home = () => {
   const isAdmin = true
-
+  // Tab Navigation state management
   const [tab, setTab] = useState<ChildrensEnum>(
     isAdmin ? ChildrensEnum.Table : ChildrensEnum.BookList,
   )
+
+  // Book selected state management
   const [selectedBook, setSelectedBook] = useState<Book | null>(null)
 
+  // Бүх номны датаг татах
   const { data, error } = useBooksQuery({
     fetchPolicy: "no-cache",
     variables: {
@@ -70,10 +84,15 @@ const Home = () => {
       />
     ),
     [ChildrensEnum.Profile]: (
-      <Profile onExit={() => setTab(ChildrensEnum.BookList)} />
+      <Profile
+        onExit={() =>
+          setTab(isAdmin ? ChildrensEnum.UserTable : ChildrensEnum.BookList)
+        }
+      />
     ),
     [ChildrensEnum.Table]: (
       <TableView
+        addBook={() => setTab(ChildrensEnum.BookDetail)}
         data={data?.books?.data}
         onEdit={async (book) => {
           await setSelectedBook(book)
@@ -81,15 +100,24 @@ const Home = () => {
         }}
       />
     ),
+    [ChildrensEnum.UserTable]: (
+      <UserTable data={[]} onAddUser={() => setTab(ChildrensEnum.Profile)} />
+    ),
   }
 
   return (
     <div className="flex w-full h-full bg-[#E8E8E8] ">
       <TabBar
         isAdmin={true}
-        onExit={() => {}}
-        onClickBook={() => setTab(ChildrensEnum.BookList)}
-        onClickProfile={() => setTab(ChildrensEnum.Profile)}
+        onExit={() => {
+          // Аккаунтаас гарах
+        }}
+        onClickBook={() =>
+          setTab(isAdmin ? ChildrensEnum.Table : ChildrensEnum.BookList)
+        }
+        onClickProfile={() =>
+          setTab(isAdmin ? ChildrensEnum.UserTable : ChildrensEnum.Profile)
+        }
       />
       <div className="container w-full h-full flex flex-col p-[50px] space-y-[30px]">
         <div className="container flex items-center justify-end text-black font-medium text-[18px] cursor-pointer">

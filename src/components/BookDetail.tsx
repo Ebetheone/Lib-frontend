@@ -1,6 +1,6 @@
 /*
 
-* @author: Sarnai
+* @author: Elbeg
 * @version: 1.0.0
 * @date: 2023:12:08
 * @improvements: BookDetail screen drawing
@@ -10,6 +10,7 @@ import Image from "next/image"
 import React from "react"
 import { Book } from "src/generated"
 
+//Номны дэлгэрэнгүй хэсэгүийн үйлдлийн төрөл
 type BookDetailsProps = {
   onBack: () => void
   book: Book | null
