@@ -17,7 +17,7 @@ import BookDetail from "src/components/BookDetail"
 import Profile from "src/components/Profile"
 import { useAuth } from "src/hooks/useAuth"
 import TableView from "src/components/TableView"
-import { useBooksQuery } from "src/generated"
+import { Book, useBooksQuery } from "src/generated"
 import { showError } from "src/utils/errorHandler"
 
 enum ChildrensEnum {
@@ -25,11 +25,16 @@ enum ChildrensEnum {
   BookList = "BookList",
   Profile = "Profile",
   Table = "Table",
+  User,
 }
 
 const Home = () => {
-  const [tab, setTab] = useState<ChildrensEnum>(ChildrensEnum.Table)
-  const [selectedBook, setSelectedBook] = useState(null)
+  const isAdmin = true
+
+  const [tab, setTab] = useState<ChildrensEnum>(
+    isAdmin ? ChildrensEnum.Table : ChildrensEnum.BookList,
+  )
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null)
 
   const { data, error } = useBooksQuery({
     fetchPolicy: "no-cache",
@@ -49,8 +54,10 @@ const Home = () => {
     [ChildrensEnum.BookDetail]: (
       <BookDetail
         book={selectedBook}
-        onBack={() => setTab(ChildrensEnum.BookList)}
-        isAdmin={true}
+        onBack={() =>
+          setTab(isAdmin ? ChildrensEnum.Table : ChildrensEnum.BookList)
+        }
+        isAdmin={isAdmin}
       />
     ),
     [ChildrensEnum.BookList]: (
@@ -65,7 +72,13 @@ const Home = () => {
       <Profile onExit={() => setTab(ChildrensEnum.BookList)} />
     ),
     [ChildrensEnum.Table]: (
-      <TableView data={data?.books?.data} onEdit={() => console.log("hoh")} />
+      <TableView
+        data={data?.books?.data}
+        onEdit={async (book) => {
+          await setSelectedBook(book)
+          await setTab(ChildrensEnum.BookDetail)
+        }}
+      />
     ),
   }
 

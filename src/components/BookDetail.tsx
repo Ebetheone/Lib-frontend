@@ -58,7 +58,7 @@ export default function BookDetail({
             />
           ) : (
             <div className="text-black font-bold text-[32px] my-[20px]">
-              value={book?.name || ""}
+              {book?.name || ""}
             </div>
           )}
           <div className="flex text-black font-medium text-[18px]">
