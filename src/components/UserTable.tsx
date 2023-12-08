@@ -13,7 +13,7 @@ import React from "react"
 import { User } from "src/generated"
 
 type UserTableProps = {
-  data: User[] | null
+  data: any[] | null | undefined
   onAddUser: () => void
 }
 

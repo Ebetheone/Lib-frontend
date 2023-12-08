@@ -6,41 +6,79 @@
 * @improvements: BookDetail screen drawing
 
 */
-import { Form, Input, message } from "antd"
+import { Button, Form, Input, message } from "antd"
 import Image from "next/image"
-import React from "react"
-import { Book, BookInput, useUpdateBookMutation } from "src/generated"
+import React, { useEffect } from "react"
+import {
+  Book,
+  BookInput,
+  useDeleteBookMutation,
+  useUpdateBookMutation,
+} from "src/generated"
 import { showError } from "src/utils/errorHandler"
 
-//Номны дэлгэрэнгүй хэсэгүийн үйлдлийн төрөл
+//Номны дэлгэрэнгүй хэсгийн үйлдлийн төрөл
 type BookDetailsProps = {
   onBack: () => void
   book: Book | null
   isAdmin: boolean
+  refetch: () => void
 }
 
 export default function BookDetail({
   onBack,
   book,
   isAdmin,
+  refetch,
 }: BookDetailsProps) {
   const [form] = Form.useForm()
+
+  useEffect(() => {
+    form.setFieldsValue({
+      category: book?.category,
+      name: book?.name,
+      limit: book?.limit,
+      publisher: book?.publisher,
+      price: book?.price,
+    })
+  }, [book])
 
   const [onUpdateBook] = useUpdateBookMutation({
     onCompleted: async () => {
       message.success("Номын мэдээлэл амжилттай засагдлаа.")
+      refetch()
+    },
+  })
+
+  const [onDeleteBook] = useDeleteBookMutation({
+    onCompleted: async () => {
+      message.success("Ном амжилттай устлаа.")
+      refetch()
     },
   })
 
   const onFinish = async (values: BookInput) => {
     console.log("UpdateBook mutation")
+    const limitInt =
+      typeof values.limit === "number"
+        ? values.limit
+        : parseInt(values.limit, 10)
+    const priceInt =
+      typeof values.price === "number"
+        ? values.price
+        : parseInt(values.price, 10)
     onUpdateBook({
       onError: (error: unknown) => {
         showError(error)
       },
       variables: {
-        id: userId,
-        input: { ...values },
+        id: book?.id || "",
+        input: {
+          ...values,
+          bestSeller: false,
+          limit: limitInt,
+          price: priceInt,
+        },
       },
     })
   }
@@ -216,8 +254,17 @@ export default function BookDetail({
           </div>
         </div>
         {isAdmin && (
-          <div className="flex h-[40px] w-full justify-center space-x-[20px] mt-[20px]">
-            <button className="h-[40px] flex text-black text-[16px] bg-[#E4E4E4] rounded p-[10px] items-center">
+          <div className="flex items-center w-full justify-between mt-[20px]">
+            <Button
+              className="h-[40px] flex text-black text-[16px] bg-[#E4E4E4] rounded p-[10px] items-center gap-2"
+              onClick={() => {
+                onDeleteBook({
+                  variables: {
+                    bookId: book?.id || "",
+                  },
+                })
+              }}
+            >
               <Image
                 src="/images/menuIcon.png"
                 height={20}
@@ -226,8 +273,11 @@ export default function BookDetail({
                 className="mr-[5px]"
               />
               Устгах
-            </button>
-            <button className="h-[40px] flex text-black text-[16px] bg-[#E4E4E4] rounded p-[10px] items-center">
+            </Button>
+            <Button
+              className="h-[40px] flex text-black text-[16px] bg-[#E4E4E4] rounded p-[10px] items-center gap-2"
+              htmlType="submit"
+            >
               <Image
                 src="/images/menuIcon.png"
                 height={20}
@@ -236,7 +286,7 @@ export default function BookDetail({
                 className="mr-[5px]"
               />
               Хадгалах
-            </button>
+            </Button>
           </div>
         )}
       </div>
