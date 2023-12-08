@@ -53,6 +53,7 @@ const Login = () => {
   })
 
   const handleSubmit = async (values: LoginEmailType) => {
+    console.log("Checking login")
     if (values?.remember) {
       localStorage.setItem(
         "credentials-email",

@@ -8,6 +8,7 @@ type Props = {
 
 export const handleAuthDialog = async (props: Props) => {
   const { apolloClient, router } = props
+  console.log("redirect page")
   await apolloClient.cache.reset()
   const returnUrl = router.query.returnUrl
   const redirectURL = returnUrl && returnUrl !== "/" ? returnUrl : "/home"

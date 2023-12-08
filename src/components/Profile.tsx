@@ -90,6 +90,7 @@ export default function Profile({ onExit }: ProfileProps) {
     values: UserInput & { phoneNumber: CountryPhoneInputValue },
   ) => {
     const { phoneNumber, ..._values } = values
+    console.log("Update user mutation")
     onUpdateUser({
       onError: (error: unknown) => {
         showError(error)

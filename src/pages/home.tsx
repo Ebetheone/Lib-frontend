@@ -40,6 +40,8 @@ enum ChildrensEnum {
 }
 
 const Home = () => {
+  console.log("HomeScreen rendering")
+
   const { user } = useAuth()
   const isAdmin = user?.role === "ADMIN"
 
@@ -93,13 +95,20 @@ const Home = () => {
         addBook={() => setTab(ChildrensEnum.BookDetail)}
         data={data?.books?.data}
         onEdit={async (book) => {
+          console.log("going Book Detail")
           await setSelectedBook(book)
           await setTab(ChildrensEnum.BookDetail)
         }}
       />
     ),
     [ChildrensEnum.UserTable]: (
-      <UserTable data={[]} onAddUser={() => setTab(ChildrensEnum.Profile)} />
+      <UserTable
+        data={[]}
+        onAddUser={() => {
+          console.log("going to profile Screen")
+          setTab(ChildrensEnum.Profile)
+        }}
+      />
     ),
   }
 

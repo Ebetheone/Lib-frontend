@@ -33,6 +33,7 @@ export default function BookDetail({
   })
 
   const onFinish = async (values: BookInput) => {
+    console.log("UpdateBook mutation")
     onUpdateBook({
       onError: (error: unknown) => {
         showError(error)
