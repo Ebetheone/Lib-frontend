@@ -23,13 +23,13 @@ const Login = () => {
 
   const { reset, setUserData, setSessionList } = useAuthModalContext()
 
-  // const [onLoginEmail, { loading: loadingEmail }] = useLoginEmailMutation({
-  //   fetchPolicy: "no-cache",
-  //   onError: (error) => {
-  //     showError(error)
-  //   },
-  //   onCompleted: (data) => {},
-  // })
+  const [onLoginEmail, { loading: loadingEmail }] = useLoginEmailMutation({
+    fetchPolicy: "no-cache",
+    onError: (error) => {
+      showError(error)
+    },
+    onCompleted: (data) => {},
+  })
 
   // const handleSubmit = async (values: LoginEmailType) => {
   //   if (values?.remember) {
@@ -143,10 +143,7 @@ const Login = () => {
           </div>
           <div className="w-8/12 flex flex-col items-start justify-center">
             <Form.Item name="remember" valuePropName="checked">
-              <Checkbox
-                className="font-[500] text-[12px]"
-                style={{ accentColor: "black" }}
-              >
+              <Checkbox className="font-[500] text-[12px]">
                 Нууц үг санах
               </Checkbox>
             </Form.Item>
