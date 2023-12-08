@@ -1,3 +1,12 @@
+/*
+
+* @author: Sarnai
+* @version: 1.0.0
+* @date: 2023:12:07
+* @improvements: BookList screen drawing
+
+*/
+
 import React, { useState } from "react"
 import SearchContainer from "./SearchContainer"
 

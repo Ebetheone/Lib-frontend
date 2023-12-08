@@ -1,3 +1,12 @@
+/*
+
+* @author: Sarnai
+* @version: 1.0.0
+* @date: 2023:12:07
+* @improvements: Book search logic with screen
+
+*/
+
 import React, { Dispatch } from "react"
 
 type SearchContainerProps = {
