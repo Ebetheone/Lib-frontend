@@ -130,3 +130,11 @@ export const DELETE_BOOK = gql`
     deleteBook(bookId: $bookId)
   }
 `
+
+export const UPDATE_USER = gql`
+  mutation UPDATE_USER($id: String!, $input: UserInput!) {
+    updateUser(id: $id, input: $input) {
+      id
+    }
+  }
+`

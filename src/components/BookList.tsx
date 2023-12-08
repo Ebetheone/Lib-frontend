@@ -6,7 +6,7 @@ import { showError } from "src/utils/errorHandler"
 import { useBooksQuery } from "src/generated"
 
 type BookListProps = {
-  onClickBook: () => void
+  onClickBook: (item: any) => void
 }
 
 export default function BookList({ onClickBook }: BookListProps) {
@@ -65,7 +65,7 @@ export default function BookList({ onClickBook }: BookListProps) {
           >
             <button
               className="container flex flex-col items-center"
-              onClick={onClickBook}
+              onClick={() => onClickBook(item)}
             >
               <Image
                 alt="container"

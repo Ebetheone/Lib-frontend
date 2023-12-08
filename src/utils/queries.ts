@@ -1,16 +1,26 @@
 import { gql } from "@apollo/client"
 
 export const USER = gql`
-  query User($input: UserWhereInput!) {
+  query User($input: UserWhereInput) {
     user(input: $input) {
       id
       userId
       role
       email
+      phone
+      countryCode
       profile {
         id
+        gender
+        birthday
         firstName
         lastName
+      }
+      address {
+        city
+        district
+        address1
+        address2
       }
     }
   }

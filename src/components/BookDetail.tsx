@@ -8,12 +8,15 @@
 */
 import Image from "next/image"
 import React from "react"
+import { Book } from "src/generated"
 
 type BookDetailsProps = {
   onBack: () => void
+  book: Book | null
 }
 
-export default function BookDetail({ onBack }: BookDetailsProps) {
+export default function BookDetail({ onBack, book }: BookDetailsProps) {
+  console.log("book", book)
   return (
     <div className="flex flex-col h-full w-full ">
       <button onClick={onBack} className="">
@@ -32,15 +35,15 @@ export default function BookDetail({ onBack }: BookDetailsProps) {
         </div>
         <div className="h-full w-full p-[50px]">
           <div className="text-[#6B6B6B] font-medium text-[18px]">
-            Ангилал: Монголын уран зохиол
+            Ангилал: {book?.category || ""}
           </div>
           <div className="text-black font-bold text-[32px] my-[20px]">
-            Аянгат цагийн тууж
+            {book?.name || ""}
           </div>
           <div className="flex text-black font-medium text-[18px]">
             Номын сан дахь үлдэгдэл:
             <div className="text-[#F30A0A] font-medium text-[18px] mx-[5px]">
-              3
+              {book?.limit || 0}
             </div>{" "}
             ш
           </div>
@@ -49,7 +52,7 @@ export default function BookDetail({ onBack }: BookDetailsProps) {
             <div className="flex justify-between">
               <div className="text-black text-[18px] font-medium">Зохиолч:</div>
               <div className="text-black text-[18px] font-medium">
-                Чинаагийн Галсан
+                {book?.publisher || ""}
               </div>
             </div>
             <div className="flex justify-between">
@@ -61,9 +64,9 @@ export default function BookDetail({ onBack }: BookDetailsProps) {
               </div>
             </div>
             <div className="flex justify-between">
-              <div className="text-black text-[18px] font-medium">ISBN:</div>
+              <div className="text-black text-[18px] font-medium">Үнэ:</div>
               <div className="text-black text-[18px] font-medium">
-                978-9919-0-0946-5
+                {book?.price || 0}₮
               </div>
             </div>
             <div className="flex justify-between">
@@ -74,7 +77,7 @@ export default function BookDetail({ onBack }: BookDetailsProps) {
               <div className="text-black text-[18px] font-medium">
                 Хэвлэгдсэн он:
               </div>
-              <div className="text-black text-[18px] font-medium">1999 </div>
+              <div className="text-black text-[18px] font-medium">1999</div>
             </div>
             <div className="flex justify-between">
               <div className="text-black text-[18px] font-medium">Хуудас:</div>

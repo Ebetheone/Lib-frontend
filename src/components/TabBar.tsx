@@ -38,7 +38,7 @@ export default function TabBar({ onClickBook, onClickProfile }: TabBarProps) {
             height={25}
             className="me-[10px]"
           />
-          Фрофайл
+          Профайл
         </button>
       </div>
     </div>
