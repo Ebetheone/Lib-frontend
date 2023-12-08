@@ -1,3 +1,12 @@
+/*
+
+* @author: Sarnai
+* @version: 1.0.0
+* @date: 2023:12:07
+* @improvements: Profile Screen props with logic
+
+*/
+
 import React, { useState } from "react"
 import Image from "next/image"
 import dayjs from "dayjs"

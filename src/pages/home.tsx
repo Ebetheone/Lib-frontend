@@ -1,3 +1,12 @@
+/*
+
+* @author: Sarnai
+* @version: 1.0.0
+* @date: 2023:12:08
+* @improvements: Home screen drawing
+
+*/
+
 import React, { useState } from "react"
 import Image from "next/image"
 
@@ -7,15 +16,17 @@ import BookList from "src/components/BookList"
 import BookDetail from "src/components/BookDetail"
 import Profile from "src/components/Profile"
 import { useAuth } from "src/hooks/useAuth"
+import TableView from "src/components/TableView"
 
 enum ChildrensEnum {
   BookDetail = "BookDetail",
   BookList = "BookList",
   Profile = "Profile",
+  Table = "Table",
 }
 
 const Home = () => {
-  const [tab, setTab] = useState<ChildrensEnum>(ChildrensEnum.BookList)
+  const [tab, setTab] = useState<ChildrensEnum>(ChildrensEnum.Table)
   const [selectedBook, setSelectedBook] = useState(null)
 
   const { user } = useAuth()
@@ -25,6 +36,7 @@ const Home = () => {
       <BookDetail
         book={selectedBook}
         onBack={() => setTab(ChildrensEnum.BookList)}
+        isAdmin={true}
       />
     ),
     [ChildrensEnum.BookList]: (
@@ -38,11 +50,14 @@ const Home = () => {
     [ChildrensEnum.Profile]: (
       <Profile onExit={() => setTab(ChildrensEnum.BookList)} />
     ),
+    [ChildrensEnum.Table]: <TableView onEdit={() => console.log("hoh")} />,
   }
 
   return (
     <div className="flex w-screen h-screen bg-[#E8E8E8] ">
       <TabBar
+        isAdmin={true}
+        onExit={() => {}}
         onClickBook={() => setTab(ChildrensEnum.BookList)}
         onClickProfile={() => setTab(ChildrensEnum.Profile)}
       />

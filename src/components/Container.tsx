@@ -1,3 +1,12 @@
+/*
+
+* @author: Sarnai
+* @version: 1.0.0
+* @date: 2023:12:07
+* @improvements: All childs container
+
+*/
+
 import React, { PropsWithChildren } from "react"
 
 export default function Container({ children }: PropsWithChildren) {
