@@ -1,9 +1,12 @@
 import React from "react"
 import Image from "next/image"
 
-export default function TabBar() {
-  console.log("haha")
+type TabBarProps = {
+  onClickBook: () => void
+  onClickProfile: () => void
+}
 
+export default function TabBar({ onClickBook, onClickProfile }: TabBarProps) {
   return (
     <div className="bg-white h-screen w-80 rounded-tr-[45px] rounded-br-[45px] p-[30px]">
       <div className="flex">
@@ -13,7 +16,7 @@ export default function TabBar() {
       <div className="flex container min-h-full w-full flex-col justify-center">
         <button
           className="flex bg-[#FFFFFF] w-[80%] h-[50px] hover:bg-[#E8E8E8] items-center rounded text-black"
-          onClick={() => console.log("hoh")}
+          onClick={onClickBook}
         >
           <Image
             src="/images/bookIcon.png"
@@ -26,7 +29,7 @@ export default function TabBar() {
         </button>
         <button
           className="flex bg-[#FFFFFF] w-[80%] h-[50px] hover:bg-[#E8E8E8] items-center rounded mt-[10px] text-black"
-          onClick={() => console.log("hoh")}
+          onClick={onClickProfile}
         >
           <Image
             src="/images/profileIcon.png"
