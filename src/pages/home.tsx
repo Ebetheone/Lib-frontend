@@ -15,15 +15,17 @@ import TabBar from "src/components/TabBar"
 import BookList from "src/components/BookList"
 import BookDetail from "src/components/BookDetail"
 import Profile from "src/components/Profile"
+import TableView from "src/components/TableView"
 
 enum ChildrensEnum {
   BookDetail = "BookDetail",
   BookList = "BookList",
   Profile = "Profile",
+  Table = "Table",
 }
 
 const Home = () => {
-  const [tab, setTab] = useState<ChildrensEnum>(ChildrensEnum.BookDetail)
+  const [tab, setTab] = useState<ChildrensEnum>(ChildrensEnum.Table)
 
   const childrens: Record<ChildrensEnum, React.JSX.Element> = {
     [ChildrensEnum.BookDetail]: (
@@ -38,6 +40,7 @@ const Home = () => {
     [ChildrensEnum.Profile]: (
       <Profile onExit={() => setTab(ChildrensEnum.BookList)} />
     ),
+    [ChildrensEnum.Table]: <TableView onEdit={() => console.log("hoh")} />,
   }
 
   return (
