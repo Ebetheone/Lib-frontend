@@ -16,7 +16,8 @@ import { Book } from "src/generated"
 type TableViewProps = {
   onEdit: (book: Book) => void
   addBook: () => void
-  data: Book[] | []
+  data: any[] | undefined | null
+  refetch: () => void
 }
 
 export default function TableView({ data, onEdit, addBook }: TableViewProps) {

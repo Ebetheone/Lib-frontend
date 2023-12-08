@@ -158,8 +158,9 @@ const Home = () => {
       />
       <div className="container w-full h-full flex flex-col p-[50px] space-y-[30px]">
         <div className="container flex items-center justify-end text-black font-medium text-[18px] cursor-pointer">
-          {`${user?.profile?.firstName} ${user?.profile?.lastName}` ||
-            "Хэрэглэгчийн нэр"}
+          {user?.profile?.firstName
+            ? `${user?.profile?.firstName} ${user?.profile?.lastName}`
+            : "Хэрэглэгчийн нэр"}
           <Image
             src="/images/profileIcon.png"
             width={25}
