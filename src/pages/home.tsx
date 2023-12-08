@@ -25,6 +25,7 @@ enum ChildrensEnum {
   BookList = "BookList",
   Profile = "Profile",
   Table = "Table",
+  User,
 }
 
 const Home = () => {
@@ -54,7 +55,9 @@ const Home = () => {
     [ChildrensEnum.BookDetail]: (
       <BookDetail
         book={selectedBook}
-        onBack={() => setTab(ChildrensEnum.BookList)}
+        onBack={() =>
+          setTab(isAdmin ? ChildrensEnum.Table : ChildrensEnum.BookList)
+        }
         isAdmin={isAdmin}
       />
     ),
