@@ -23,7 +23,7 @@ import { MailOutlined, LockOutlined } from "@ant-design/icons"
 import { showError } from "src/utils/errorHandler"
 import { LoginEmailInput, useLoginEmailMutation } from "src/generated"
 import { removeItemToken, setItemToken } from "src/lib/apollo/tokenHandler"
-import { AuthModalType, config } from "src/config"
+import { config } from "src/config"
 import { useRouter } from "next/router"
 import { useAuthModalContext } from "src/hooks/useAuth"
 import { handleAuthDialog } from "src/utils/handleAuthDialog"
@@ -42,14 +42,13 @@ const Login = () => {
   const router = useRouter()
   const apolloClient = useApolloClient()
 
-  const { reset, setUserData, setSessionList } = useAuthModalContext()
+  const { setUserData, setSessionList } = useAuthModalContext()
 
   const [onLoginEmail, { loading: loadingEmail }] = useLoginEmailMutation({
     fetchPolicy: "no-cache",
     onError: (error) => {
       showError(error)
     },
-    onCompleted: (data) => {},
   })
 
   const handleSubmit = async (values: LoginEmailType) => {
@@ -84,11 +83,6 @@ const Login = () => {
         handleAuthDialog({ apolloClient, router })
       } else if (data.loginEmail.devices) {
         setSessionList(data.loginEmail.devices)
-        // setVisibleAuthDialog(AuthModalType.SessionManage)
-      } else if (data?.loginEmail && !data?.loginEmail?.isEmailConfirmed) {
-        // setVisibleAuthDialog(AuthModalType.TokenVerify)
-      } else if (reset) {
-        // setVisibleAuthDialog(AuthModalType.ChangePassword)
       }
     }
   }
